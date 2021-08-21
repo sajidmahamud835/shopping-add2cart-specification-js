@@ -2,7 +2,7 @@
     Global Variables
 ------------------ */
 
-//options value
+//options value (extra cost will be added for each item)
 const memory8GbExtraCost = 0;
 const memory16GbExtraCost = 180;
 
@@ -14,7 +14,7 @@ const deliveryFreeeExtraCost = 0;
 const deliveryFastExtraCost = 20;
 
 //discount value
-const discountPerCent = 20;
+const discountPerCent = 20; // input discount value in percent(%)
 
 //option selectors
 const memory8Gb = document.getElementById("memory-8gb");
@@ -27,7 +27,12 @@ const storage1Tb = document.getElementById("storage-1tb");
 const deliveryFree = document.getElementById("delivery-free")
 const deliveryFast = document.getElementById("delivery-fast");
 
-//option arrays
+//option arrays (to short the options and option values.)
+/* 
+    - Create an array with the option selectors.
+    - Create an array with cost of each option.
+    - Make sure the index of the option and its cost in the same index.
+*/
 const memoryOptions = [memory8Gb, memory16Gb];
 const memoryOptionCosts = [memory8GbExtraCost, memory16GbExtraCost];
 
