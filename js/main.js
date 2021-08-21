@@ -118,7 +118,7 @@ function applyPromocode() {
     priceCalculator();
 
     //reset input box
-    promoCodeInput.value;
+    promoCodeInput.value = '';
 }
 
 
