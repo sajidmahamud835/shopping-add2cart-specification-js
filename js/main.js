@@ -1,6 +1,7 @@
 /* -------------------
     Global Variables
 ------------------ */
+
 //options value
 const memory8GbExtraCost = 0;
 const memory16GbExtraCost = 180;
@@ -11,6 +12,9 @@ const storage1TbExtraCost = 180;
 
 const deliveryFreeeExtraCost = 0;
 const deliveryFastExtraCost = 20;
+
+//discount value
+const discountPerCent = 20;
 
 //option selectors
 const memory8Gb = document.getElementById("memory-8gb");
@@ -41,12 +45,17 @@ const storageCostField = document.getElementById("storage-cost");
 const deliveryCostField = document.getElementById("delivery-cost");
 const totalPriceField = document.getElementById("total-price");
 
-
-// const totalPriceValue = parseFloat(totalPriceField.innerText);
+// add promo code
+let totalPriceValue = parseFloat(totalPriceField.innerText);
+const promoCodeInput = document.getElementById("pormo-code-input");
+const promoCodeButton = document.getElementById("add-promo-code-button");
+let isDiscounted = false; //this variable will be updated when user input a valid promocode
+const totalPriceAfterDiscountField = document.getElementById("total-price-after-discount");
 
 /* --------------------------
     Calculate Total Price
 ---------------------------- */
+
 function priceCalculator() {
     //price field value
     const bestPriceValue = parseFloat(bestPriceField.innerText);
@@ -55,18 +64,29 @@ function priceCalculator() {
     const deliveryCostValue = parseFloat(deliveryCostField.innerText);
 
     //get total price
-    totalPriceValue = bestPriceValue + memoryCostValue + storageCostValue + deliveryCostValue;
-    console.log('Total Price:', totalPriceValue)
+    const totalPriceValue = bestPriceValue + memoryCostValue + storageCostValue + deliveryCostValue;
+    console.log('Total Price:', totalPriceValue);
 
     //set total price
     totalPriceField.innerText = totalPriceValue;
+
+    //get final price
+    if (isDiscounted == true) {
+        const discountRate = discountPerCent / 100;
+        const totalPriceAfterDiscount = totalPriceValue - (totalPriceValue * discountRate);
+
+        //update final price
+        totalPriceAfterDiscountField.innerText = totalPriceAfterDiscount;
+    }
+    else {
+        totalPriceAfterDiscountField.innerText = totalPriceValue; //if no discount the value will be same.
+    }
 }
 
 
-
-/* ---------------------------
-    Event Handeler Functions
----------------------------- */
+/* ------------------------
+   Apply Selected Option
+------------------------- */
 
 //apply the price of the option selected.
 function applyOption(optionCost, optionPriceFeild) {
@@ -75,6 +95,24 @@ function applyOption(optionCost, optionPriceFeild) {
     //recalculate total price
     priceCalculator();
 }
+
+
+/* ------------------------
+   Apply Typed Promocode
+------------------------- */
+function applyPromocode() {
+    const promocode = promoCodeInput.value;
+    if (promocode == 'stevekaku') {
+        isDiscounted = true;
+    }
+    else {
+        alert('The promotional code you entered is not valid!');
+    }
+
+    //recalculate total price
+    priceCalculator();
+}
+
 
 /* ---------------------------
     Event Listener Functions
@@ -93,7 +131,14 @@ function selectOption(options, optionsCost, optionPriceFeild) {
     }
 }
 
-// call event listener
+//listen add promocode button
+promoCodeButton.addEventListener('click', function () {
+    console.log('Add promocode button clicked.');
+    applyPromocode();
+});
+
+
+// call event listeners
 selectOption(memoryOptions, memoryOptionCosts, memoryCostField);
 selectOption(storageOptions, storageOptionCosts, storageCostField);
 selectOption(deliveryOptions, deliveryOptionCosts, deliveryCostField);
