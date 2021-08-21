@@ -116,6 +116,9 @@ function applyPromocode() {
 
     //recalculate total price
     priceCalculator();
+
+    //reset input box
+    promoCodeInput.value;
 }
 
 
