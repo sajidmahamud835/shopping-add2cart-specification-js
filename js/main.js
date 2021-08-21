@@ -1,7 +1,7 @@
 /* -------------------
     Global Variables
 ------------------ */
-//extra cost variables
+//options value
 const memory8GbExtraCost = 0;
 const memory16GbExtraCost = 180;
 
@@ -12,7 +12,7 @@ const storage1TbExtraCost = 180;
 const deliveryFreeeExtraCost = 0;
 const deliveryFastExtraCost = 20;
 
-//product specification variables
+//option selectors
 const memory8Gb = document.getElementById("memory-8gb");
 const memory16Gb = document.getElementById("memory-16gb");
 
@@ -23,7 +23,7 @@ const storage1Tb = document.getElementById("storage-1tb");
 const deliveryFree = document.getElementById("delivery-free")
 const deliveryFast = document.getElementById("delivery-fast");
 
-//arrays
+//option arrays
 const memoryOptions = [memory8Gb, memory16Gb];
 const memoryOptionCosts = [memory8GbExtraCost, memory16GbExtraCost];
 
@@ -34,12 +34,34 @@ const deliveryOptions = [deliveryFree, deliveryFast];
 const deliveryOptionCosts = [deliveryFreeeExtraCost, deliveryFastExtraCost];
 
 
-//cost calculator variables
+//price field for each option
 const bestPriceField = document.getElementById("best-price");
 const memoryCostField = document.getElementById("memory-cost");
 const storageCostField = document.getElementById("storage-cost");
 const deliveryCostField = document.getElementById("delivery-cost");
 const totalPriceField = document.getElementById("total-price");
+
+
+// const totalPriceValue = parseFloat(totalPriceField.innerText);
+
+/* --------------------------
+    Calculate Total Price
+---------------------------- */
+function priceCalculator() {
+    //price field value
+    const bestPriceValue = parseFloat(bestPriceField.innerText);
+    const memoryCostValue = parseFloat(memoryCostField.innerText);
+    const storageCostValue = parseFloat(storageCostField.innerText);
+    const deliveryCostValue = parseFloat(deliveryCostField.innerText);
+
+    //get total price
+    totalPriceValue = bestPriceValue + memoryCostValue + storageCostValue + deliveryCostValue;
+    console.log('Total Price:', totalPriceValue)
+
+    //set total price
+    totalPriceField.innerText = totalPriceValue;
+}
+
 
 
 /* ---------------------------
@@ -49,6 +71,9 @@ const totalPriceField = document.getElementById("total-price");
 //apply the price of the option selected.
 function applyOption(optionCost, optionPriceFeild) {
     optionPriceFeild.innerText = optionCost;
+
+    //recalculate total price
+    priceCalculator();
 }
 
 /* ---------------------------
@@ -65,7 +90,6 @@ function selectOption(options, optionsCost, optionPriceFeild) {
             console.log('Selected', element.innerText);
             applyOption(optionCost, optionPriceFeild);
         });
-
     }
 }
 
